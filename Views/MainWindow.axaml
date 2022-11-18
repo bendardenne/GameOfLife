@@ -7,9 +7,10 @@
         xmlns:controls="clr-namespace:GameOfLife.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GameOfLife.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
         Title="GameOfLife">
 
-    <controls:GOLGrid Grid="{Binding Grid }"/>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <controls:BooleanGrid Grid="{Binding Grid }" />
+    </ScrollViewer>
 
 </Window>

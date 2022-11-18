@@ -18,8 +18,8 @@ public class MainWindowViewModel : ViewModelBase
 
     public MainWindowViewModel()
     {
-        _universe = Locator.GetLocator().GetService<Universe>();
+        _universe = Locator.GetLocator().GetService<Universe>()!;
         _universe.UniverseChanged += () => { Grid = _universe.Grid; };
-        Grid = _universe.Grid;
+        _grid = _universe.Grid;
     }
 }

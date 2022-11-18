@@ -1,1 +1,1 @@
-This is just a toy project for teaching myself C#.
+This is just a toy project for teaching myself C#, with the Avalonia framework.
