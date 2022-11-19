@@ -14,10 +14,10 @@
                         Content="{Binding ControlPanel}" />
 
         <Border HorizontalAlignment="Center" VerticalAlignment="Center"
-                BorderBrush="Gray" BorderThickness="2" CornerRadius="2"
+                BorderBrush="Gray" BorderThickness="2" CornerRadius="5"
                 Margin="20" Padding="20">
             <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                <controls:BooleanGrid Grid="{Binding Grid }" />
+                <controls:BooleanGrid Grid="{Binding Grid }" CellClicked="GridCellClicked" />
             </ScrollViewer>
         </Border>
 

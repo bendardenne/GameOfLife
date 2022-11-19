@@ -30,6 +30,7 @@ public partial class App : Application
 
             // Create model and register as a singleton. 
             var universe = new Universe(50, 50);
+            universe.Reseed();
 
             Locator.CurrentMutable.RegisterConstant(universe, typeof(Universe));
 

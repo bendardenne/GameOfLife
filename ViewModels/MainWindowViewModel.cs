@@ -1,4 +1,6 @@
-﻿using GameOfLife.Models;
+﻿using System;
+using System.Windows.Input;
+using GameOfLife.Models;
 using ReactiveUI;
 using Splat;
 
@@ -17,6 +19,8 @@ public class MainWindowViewModel : ViewModelBase
 
         var timeService = Locator.GetLocator().GetService<ITimeService>()!;
         ControlPanel = new ControlPanelViewModel(_universe, timeService);
+
+        ToggleCellCommand = ReactiveCommand.Create<Tuple<int, int>>((a) => _universe.Toggle(a.Item1, a.Item2));
     }
 
     public bool[,] Grid
@@ -26,4 +30,11 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     public ControlPanelViewModel ControlPanel { get; }
+
+    public ICommand ToggleCellCommand { get; }
+
+    public void GridCellClicked(int x, int y)
+    {
+        _universe.Toggle(x, y);
+    }
 }

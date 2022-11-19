@@ -54,6 +54,17 @@ public class Universe : IEnableLogger
         (Grid, _nextGrid) = (_nextGrid, Grid);
     }
 
+    /// <summary>
+    /// Allows to manually toggle the state of an individual cell. 
+    /// </summary>
+    /// <param name="x">x coordinate</param>
+    /// <param name="y">y coordinate</param>
+    public void Toggle(int x, int y)
+    {
+        Grid[x, y] = !Grid[x, y];
+        UniverseChanged?.Invoke();
+    }
+
     private bool NewState(int x, int y)
     {
         var maxWidth = _grid.GetLength(0);
@@ -74,11 +85,9 @@ public class Universe : IEnableLogger
             }
         }
 
+        // if cell is alive, it stays alive if 2 or 3 neighbours are alive
         if (_grid[x, y])
-        {
-            //if cell is alive, it stays alive if 2 or 3 neighbours are alive
             return liveNeighbours is 2 or 3;
-        }
 
         // dead cell becomes alive if exactly 3 neighbours are alive
         return liveNeighbours is 3;
@@ -91,9 +100,9 @@ public class Universe : IEnableLogger
 
     public void Reseed()
     {
-        for (int i = 0; i < Grid.GetLength(0); i++)
+        for (var i = 0; i < Grid.GetLength(0); i++)
         {
-            for (int j = 0; j < Grid.GetLength(0); j++)
+            for (var j = 0; j < Grid.GetLength(0); j++)
             {
                 _nextGrid[i, j] = _random.NextDouble() > 0.6;
             }
