@@ -1,3 +1,6 @@
+using Avalonia.Threading;
+using Splat;
+
 namespace GameOfLife.Models;
 
 public delegate void UniverseChangedEvent();
@@ -5,7 +8,7 @@ public delegate void UniverseChangedEvent();
 /// <summary>
 /// Model class which represents the space for our Game of Life.  
 /// </summary>
-public class Universe
+public class Universe : IEnableLogger
 {
     public event UniverseChangedEvent? UniverseChanged;
 

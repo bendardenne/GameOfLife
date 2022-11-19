@@ -3,15 +3,17 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
 using Avalonia.Media;
+using Avalonia.Threading;
 using DynamicData.Binding;
 using ReactiveUI;
+using Splat;
 
 namespace GameOfLife.Controls;
 
 /// <summary>
 /// A custom Control that displays a grid of booleans.
 /// </summary>
-public class BooleanGrid : Control
+public class BooleanGrid : Control, IEnableLogger
 {
     private const int CellSpacing = 16;
 
@@ -21,7 +23,7 @@ public class BooleanGrid : Control
     public bool[,] Grid
     {
         get => GetValue(GridProperty);
-        set { SetValue(GridProperty, value); }
+        set => SetValue(GridProperty, value);
     }
 
     public BooleanGrid()
@@ -63,7 +65,7 @@ public class BooleanGrid : Control
                         j * CellSpacing + 1,
                         CellSpacing - 2,
                         CellSpacing - 2);
-                    
+
                     context.DrawRectangle(Brushes.Yellow, null, cellArea);
                 }
             }

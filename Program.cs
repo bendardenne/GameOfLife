@@ -1,6 +1,9 @@
 ﻿using Avalonia;
 using Avalonia.ReactiveUI;
 using System;
+using Projektanker.Icons.Avalonia;
+using Projektanker.Icons.Avalonia.FontAwesome;
+using Projektanker.Icons.Avalonia.MaterialDesign;
 
 namespace GameOfLife;
 
@@ -18,5 +21,9 @@ class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .LogToTrace()
-            .UseReactiveUI();
+            .WithIcons(container => container
+                .Register<FontAwesomeIconProvider>()
+                .Register<MaterialDesignIconProvider>())
+            .UseReactiveUI()
+        ;
 }

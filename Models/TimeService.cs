@@ -24,10 +24,19 @@ public class TimeService : ITimeService, IEnableLogger
         _resolution = tickResolution;
     }
 
+    public event PlaybackChangedEvent? PlaybackChanged;
+
     public void Start()
     {
+        if (_task != null)
+        {
+            this.Log().Info("Starting the time service, but it was already started.");
+            return;
+        }
+
         this.Log().Debug("Starting the time service.");
         _task = RxApp.TaskpoolScheduler.SchedulePeriodic(_resolution, Tick);
+        PlaybackChanged?.Invoke(true);
     }
 
     public void Stop()
@@ -37,12 +46,19 @@ public class TimeService : ITimeService, IEnableLogger
             this.Log().Info("Stopping the time service, but it was not started.");
             return;
         }
-        
+
         this.Log().Debug("Stopping the time service.");
         _task.Dispose();
+        _task = null;
+        PlaybackChanged?.Invoke(false);
     }
 
-    private void Tick()
+    public bool IsPlaying
+    {
+        get => _task != null;
+    }
+
+    public void Tick()
     {
         _actions.ForEach(a => a());
     }

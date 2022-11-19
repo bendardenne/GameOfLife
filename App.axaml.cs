@@ -16,6 +16,7 @@ public partial class App : Application
 {
     public override void Initialize()
     {
+        Locator.CurrentMutable.UseNLogWithWrappingFullLogger();
         AvaloniaXamlLoader.Load(this);
     }
 
@@ -23,11 +24,6 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            var logger = new ConsoleLogger() { Level = LogLevel.Debug };
-            // Locator.CurrentMutable.RegisterConstant(logger, typeof(ILogger));
-
-            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration("NLog.config");
-            Locator.CurrentMutable.UseNLogWithWrappingFullLogger();
 
             // Line below is needed to remove Avalonia data validation.
             // Without this line you will get duplicate validations from both Avalonia and CT
@@ -51,7 +47,7 @@ public partial class App : Application
             timeService += universe.PassTime;
             timeService.Start();
 
-            Locator.CurrentMutable.RegisterConstant(timeService, typeof(TimeService));
+            Locator.CurrentMutable.RegisterConstant(timeService, typeof(ITimeService));
 
             desktop.MainWindow = new MainWindow
             {

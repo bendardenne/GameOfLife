@@ -9,8 +9,11 @@
         x:Class="GameOfLife.Views.MainWindow"
         Title="GameOfLife">
 
-    <ScrollViewer HorizontalScrollBarVisibility="Auto">
-        <controls:BooleanGrid Grid="{Binding Grid }" />
-    </ScrollViewer>
-
+    <DockPanel>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+            <controls:BooleanGrid Grid="{Binding Grid }" />
+        </ScrollViewer>
+        
+        <ContentControl DockPanel.Dock="Right" Content="{Binding ControlPanel}"/>
+    </DockPanel>
 </Window>
