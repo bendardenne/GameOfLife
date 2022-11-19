@@ -1,6 +1,5 @@
 namespace GameOfLife.Models;
 
-
 public delegate void PlaybackChangedEvent(bool isPlaying);
 
 /// <summary>
@@ -8,9 +7,14 @@ public delegate void PlaybackChangedEvent(bool isPlaying);
 /// </summary>
 public interface ITimeService
 {
+    /// <summary>
+    /// Whether the service is currently playing or stopped.
+    /// </summary>
+    /// <returns></returns>
+    bool IsPlaying { get; }
 
-    public event PlaybackChangedEvent?  PlaybackChanged;
-    
+    public event PlaybackChangedEvent? PlaybackChanged;
+
     /// <summary>
     /// Start the time flow.
     /// </summary>
@@ -20,12 +24,6 @@ public interface ITimeService
     /// Stop the time flow. 
     /// </summary>
     void Stop();
-
-    /// <summary>
-    /// Whether the service is currently playing or stopped.
-    /// </summary>
-    /// <returns></returns>
-    bool IsPlaying { get; }
 
     /// <summary>
     /// Manually fire a tick. 

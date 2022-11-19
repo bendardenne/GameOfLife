@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reactive.Concurrency;
-using NLog.Fluent;
 using ReactiveUI;
 using Splat;
 
@@ -9,8 +8,8 @@ namespace GameOfLife.Models;
 
 public class TimeService : ITimeService, IEnableLogger
 {
-    private readonly TimeSpan _resolution;
     private readonly List<Action> _actions;
+    private readonly TimeSpan _resolution;
 
     private IDisposable? _task;
 

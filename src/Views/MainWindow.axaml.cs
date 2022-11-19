@@ -12,6 +12,6 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
 
     private void GridCellClicked(int x, int y)
     {
-        ViewModel.GridCellClicked(x, y);
+        ViewModel?.GridCellClicked(x, y);
     }
 }

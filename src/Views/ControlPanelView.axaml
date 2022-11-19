@@ -6,21 +6,32 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GameOfLife.Views.ControlPanelView">
 
-    <StackPanel Orientation="Horizontal" >
+    <StackPanel Orientation="Horizontal">
         <ToggleButton Command="{Binding TogglePlayCommand}">
             <avalonia:Icon Value="mdi-play-pause" />
         </ToggleButton>
-        
+
         <Button Command="{Binding StepCommand}">
             <avalonia:Icon Value="mdi-debug-step-over" />
         </Button>
-        
+
         <Button Command="{Binding ClearCommand}">
             <avalonia:Icon Value="mdi-trash-can" />
         </Button>
-        
-        <Button Command="{Binding ReseedCommand}">
-            <avalonia:Icon Value="fa-shuffle" />
-        </Button>
+
+        <Border BorderBrush="White" BorderThickness="1" CornerRadius="8" Margin="10 0" Padding="10">
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <Button Command="{Binding ReseedCommand}">
+                    <avalonia:Icon Value="fa-shuffle" />
+                </Button>
+
+                <Slider Value="{Binding FillRatio}" Minimum="0.0" Maximum="1.0" Width="200" />
+                <TextBlock Width="70"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                           FontFamily="fixed"
+                           Text="{Binding FillRatio, StringFormat=\{0\,-10:P2\}}" />
+            </StackPanel>
+        </Border>
+
     </StackPanel>
 </UserControl>

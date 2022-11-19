@@ -9,6 +9,7 @@ public class ControlPanelViewModel : ViewModelBase
 {
     private readonly ITimeService _timeService;
     private readonly Universe _universe;
+    private double _fillRatio;
     private bool _playing;
 
     public ControlPanelViewModel(Universe universe, ITimeService timeService)
@@ -17,7 +18,7 @@ public class ControlPanelViewModel : ViewModelBase
         _timeService = timeService;
         _timeService.PlaybackChanged += (playing) => Playing = playing;
         _playing = _timeService.IsPlaying;
-
+        _fillRatio = 0.6;
 
         TogglePlayCommand = ReactiveCommand.Create(() =>
         {
@@ -39,7 +40,13 @@ public class ControlPanelViewModel : ViewModelBase
 
         ClearCommand = ReactiveCommand.Create(() => { _universe.Clear(); });
 
-        ReseedCommand = ReactiveCommand.Create(() => _universe.Reseed());
+        ReseedCommand = ReactiveCommand.Create(() => _universe.Reseed(_fillRatio));
+    }
+
+    public double FillRatio
+    {
+        get => _fillRatio;
+        set => this.RaiseAndSetIfChanged(ref _fillRatio, value);
     }
 
     public ICommand TogglePlayCommand { get; }

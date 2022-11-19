@@ -8,13 +8,18 @@ namespace GameOfLife.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
+    private double _crowdedness;
     private bool[,] _grid;
     private Universe _universe;
 
     public MainWindowViewModel()
     {
         _universe = Locator.GetLocator().GetService<Universe>()!;
-        _universe.UniverseChanged += () => { Grid = _universe.Grid; };
+        _universe.UniverseChanged += () =>
+        {
+            Grid = _universe.Grid;
+            Crowdedness = _universe.Crowdedness;
+        };
         _grid = _universe.Grid;
 
         var timeService = Locator.GetLocator().GetService<ITimeService>()!;
@@ -27,6 +32,12 @@ public class MainWindowViewModel : ViewModelBase
     {
         get => _grid;
         set => this.RaiseAndSetIfChanged(ref _grid, value);
+    }
+
+    public double Crowdedness
+    {
+        get => _crowdedness;
+        set => this.RaiseAndSetIfChanged(ref _crowdedness, value);
     }
 
     public ControlPanelViewModel ControlPanel { get; }

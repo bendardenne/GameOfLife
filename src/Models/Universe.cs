@@ -10,6 +10,7 @@ public delegate void UniverseChangedEvent();
 /// </summary>
 public class Universe : IEnableLogger
 {
+    private double _filled;
     private bool[,] _grid;
     private bool[,] _nextGrid;
     private Random _random;
@@ -36,6 +37,11 @@ public class Universe : IEnableLogger
         }
     }
 
+    public double Crowdedness
+    {
+        get => _filled / Grid.Length;
+    }
+
     public event UniverseChangedEvent? UniverseChanged;
 
     /// <summary>
@@ -43,14 +49,17 @@ public class Universe : IEnableLogger
     /// </summary>
     public void PassTime()
     {
+        double filled = 0;
         for (int x = 0; x < _grid.GetLength(0); x++)
         {
             for (int y = 0; y < _grid.GetLength(1); y++)
             {
                 _nextGrid[x, y] = NewState(x, y);
+                filled += _nextGrid[x, y] ? 1 : 0;
             }
         }
 
+        _filled = filled;
         (Grid, _nextGrid) = (_nextGrid, Grid);
     }
 
@@ -62,6 +71,7 @@ public class Universe : IEnableLogger
     public void Toggle(int x, int y)
     {
         Grid[x, y] = !Grid[x, y];
+        _filled += Grid[x, y] ? 1 : -1;
         UniverseChanged?.Invoke();
     }
 
@@ -95,19 +105,23 @@ public class Universe : IEnableLogger
 
     public void Clear()
     {
+        _filled = 0;
         Grid = new bool[Grid.GetLength(0), Grid.GetLength(1)];
     }
 
-    public void Reseed()
+    public void Reseed(double fillRatio = 0.6)
     {
+        double filled = 0;
         for (var i = 0; i < Grid.GetLength(0); i++)
         {
             for (var j = 0; j < Grid.GetLength(0); j++)
             {
-                _nextGrid[i, j] = _random.NextDouble() > 0.6;
+                _nextGrid[i, j] = _random.NextDouble() > (1 - fillRatio);
+                filled += _nextGrid[i, j] ? 1 : 0;
             }
         }
 
+        _filled = filled;
         (Grid, _nextGrid) = (_nextGrid, Grid);
     }
 }

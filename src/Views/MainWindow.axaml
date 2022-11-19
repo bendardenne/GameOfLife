@@ -7,6 +7,7 @@
         x:Class="GameOfLife.Views.MainWindow"
         Title="GameOfLife">
 
+
     <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <ContentControl DockPanel.Dock="Bottom"
                         Margin="5"
@@ -16,9 +17,16 @@
         <Border HorizontalAlignment="Center" VerticalAlignment="Center"
                 BorderBrush="Gray" BorderThickness="2" CornerRadius="5"
                 Margin="20" Padding="20">
-            <ScrollViewer HorizontalScrollBarVisibility="Auto">
-                <controls:BooleanGrid Grid="{Binding Grid }" CellClicked="GridCellClicked" />
-            </ScrollViewer>
+            <StackPanel Spacing="5">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <controls:BooleanGrid Grid="{Binding Grid}" CellClicked="GridCellClicked" />
+                </ScrollViewer>
+
+                <TextBlock HorizontalAlignment="Center"
+                           FontFamily="fixed"
+                           Text="{Binding Crowdedness, StringFormat=\{0:Universe occupancy: 00.00 %\}}" />
+            </StackPanel>
+
         </Border>
 
     </DockPanel>
