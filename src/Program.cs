@@ -1,6 +1,6 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.ReactiveUI;
-using System;
 using Projektanker.Icons.Avalonia;
 using Projektanker.Icons.Avalonia.FontAwesome;
 using Projektanker.Icons.Avalonia.MaterialDesign;
@@ -24,6 +24,5 @@ class Program
             .WithIcons(container => container
                 .Register<FontAwesomeIconProvider>()
                 .Register<MaterialDesignIconProvider>())
-            .UseReactiveUI()
-        ;
+            .UseReactiveUI();
 }
