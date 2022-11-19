@@ -6,12 +6,21 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="GameOfLife.Views.ControlPanelView">
 
-    <Grid Margin="10" ColumnDefinitions="Auto,Auto">
-        <ToggleButton Grid.Column="0" Command="{Binding TogglePlayCommand}">
+    <StackPanel Orientation="Horizontal" >
+        <ToggleButton Command="{Binding TogglePlayCommand}">
             <avalonia:Icon Value="mdi-play-pause" />
         </ToggleButton>
-        <Button Grid.Column="1" Command="{Binding StepCommand}">
+        
+        <Button Command="{Binding StepCommand}">
             <avalonia:Icon Value="mdi-debug-step-over" />
         </Button>
-    </Grid>
+        
+        <Button Command="{Binding ClearCommand}">
+            <avalonia:Icon Value="mdi-trash-can" />
+        </Button>
+        
+        <Button Command="{Binding ReseedCommand}">
+            <avalonia:Icon Value="fa-shuffle" />
+        </Button>
+    </StackPanel>
 </UserControl>

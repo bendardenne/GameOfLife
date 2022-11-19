@@ -1,10 +1,7 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Data;
 using Avalonia.Media;
-using Avalonia.Threading;
-using DynamicData.Binding;
 using ReactiveUI;
 using Splat;
 
@@ -20,21 +17,21 @@ public class BooleanGrid : Control, IEnableLogger
     public static readonly StyledProperty<bool[,]> GridProperty =
         AvaloniaProperty.Register<BooleanGrid, bool[,]>(nameof(Grid));
 
+    public BooleanGrid()
+    {
+        AffectsRender<BooleanGrid>(GridProperty);
+
+        this.WhenAnyValue(x => x.Grid).Subscribe(g =>
+        {
+            Width = (g?.GetLength(0) ?? 0) * CellSpacing;
+            Height = (g?.GetLength(1) ?? 0) * CellSpacing;
+        });
+    }
+
     public bool[,] Grid
     {
         get => GetValue(GridProperty);
         set => SetValue(GridProperty, value);
-    }
-
-    public BooleanGrid()
-    {
-        AffectsRender<BooleanGrid>(GridProperty);
-        
-        this.WhenAnyValue(x => x.Grid).Subscribe(g =>
-        {
-            Width = (g?.GetLength(0) ?? 0 ) * CellSpacing;
-            Height = (g?.GetLength(1) ?? 0) * CellSpacing;
-        });
     }
 
     public override void Render(DrawingContext context)

@@ -16,7 +16,7 @@ public class MainWindowViewModel : ViewModelBase
         _grid = _universe.Grid;
 
         var timeService = Locator.GetLocator().GetService<ITimeService>()!;
-        ControlPanel = new ControlPanelViewModel(timeService);
+        ControlPanel = new ControlPanelViewModel(_universe, timeService);
     }
 
     public bool[,] Grid

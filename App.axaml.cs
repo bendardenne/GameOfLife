@@ -24,22 +24,12 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-
             // Line below is needed to remove Avalonia data validation.
             // Without this line you will get duplicate validations from both Avalonia and CT
             ExpressionObserver.DataValidators.RemoveAll(x => x is DataAnnotationsValidationPlugin);
 
             // Create model and register as a singleton. 
             var universe = new Universe(50, 50);
-
-            var random = new Random();
-            for (int i = 0; i < universe.Grid.GetLength(0); i++)
-            {
-                for (int j = 0; j < universe.Grid.GetLength(0); j++)
-                {
-                    universe.Grid[i, j] = random.NextDouble() > 0.6;
-                }
-            }
 
             Locator.CurrentMutable.RegisterConstant(universe, typeof(Universe));
 

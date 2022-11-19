@@ -1,4 +1,4 @@
-using Avalonia.Threading;
+using System;
 using Splat;
 
 namespace GameOfLife.Models;
@@ -10,10 +10,21 @@ public delegate void UniverseChangedEvent();
 /// </summary>
 public class Universe : IEnableLogger
 {
-    public event UniverseChangedEvent? UniverseChanged;
-
     private bool[,] _grid;
     private bool[,] _nextGrid;
+    private Random _random;
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="width">How many columns the game should have.</param>
+    /// <param name="height">How many rows the game should have.</param>
+    public Universe(int width, int height)
+    {
+        _grid = new bool[width, height];
+        _nextGrid = new bool[width, height];
+        _random = new Random();
+    }
 
     public bool[,] Grid
     {
@@ -25,16 +36,7 @@ public class Universe : IEnableLogger
         }
     }
 
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    /// <param name="width">How many columns the game should have.</param>
-    /// <param name="height">How many rows the game should have.</param>
-    public Universe(int width, int height)
-    {
-        _grid = new bool[width, height];
-        _nextGrid = new bool[width, height];
-    }
+    public event UniverseChangedEvent? UniverseChanged;
 
     /// <summary>
     /// Perform one generation of the Game of Life.  
@@ -80,5 +82,23 @@ public class Universe : IEnableLogger
 
         // dead cell becomes alive if exactly 3 neighbours are alive
         return liveNeighbours is 3;
+    }
+
+    public void Clear()
+    {
+        Grid = new bool[Grid.GetLength(0), Grid.GetLength(1)];
+    }
+
+    public void Reseed()
+    {
+        for (int i = 0; i < Grid.GetLength(0); i++)
+        {
+            for (int j = 0; j < Grid.GetLength(0); j++)
+            {
+                _nextGrid[i, j] = _random.NextDouble() > 0.6;
+            }
+        }
+
+        (Grid, _nextGrid) = (_nextGrid, Grid);
     }
 }
